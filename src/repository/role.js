@@ -25,6 +25,32 @@ const findAll = async ({ page, size }) => {
 	return { rows, paging };
 };
 
+const findAllSeek = async ({ currentCursor, size }) => {
+	let nextCursor;
+	const { rows, count } = await role.findAndCountAll({
+		limit: size,
+		where: { id: { [Op.gte]: currentCursor } },
+		include: { model: privilege, through: { attributes: [] }, attributes: ['name', 'description'], as: 'privileges' },
+		distinct: true,
+	});
+	if (count) nextCursor = (Math.trunc(currentCursor / size) + 1) * size + 1;
+	const paging = { nextCursor, page: undefined, pages: Math.trunc(count / size) + 1, records: count };
+	return { rows, paging };
+};
+
+const findAllBySeek = async ({ currentCursor, size, cond }) => {
+	let nextCursor;
+	const { rows, count } = await role.findAndCountAll({
+		limit: size,
+		where: { ...cond, id: { [Op.gte]: currentCursor } },
+		include: { model: privilege, through: { attributes: [] }, attributes: ['name', 'description'], as: 'privileges' },
+		distinct: true,
+	});
+	if (count) nextCursor = (Math.trunc(currentCursor / size) + 1) * size + 1;
+	const paging = { nextCursor, page: undefined, pages: Math.trunc(count / size) + 1, records: count };
+	return { rows, paging };
+};
+
 const findAllBy = async ({ page, size, cond }) => {
 	const offset = (page - 1) * size;
 	const { rows, count } = await role.findAndCountAll({
@@ -62,7 +88,9 @@ module.exports = {
 	findById,
 	findAllById,
 	findAll,
+	findAllSeek,
 	findAllBy,
+	findAllBySeek,
 	findAllArchived,
 	update,
 	remove,

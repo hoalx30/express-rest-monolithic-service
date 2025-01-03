@@ -36,6 +36,52 @@
 							"response": []
 						},
 						{
+							"name": "findAll - 200 (page gte boundary)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LOCAL_ENDPOINT}}/privileges",
+									"host": ["{{LOCAL_ENDPOINT}}"],
+									"path": ["privileges"],
+									"query": [
+										{
+											"key": "page",
+											"value": "50"
+										},
+										{
+											"key": "size",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findAll - 200 (with seek)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LOCAL_ENDPOINT}}/privileges?size=5&nextCursor=2501",
+									"host": ["{{LOCAL_ENDPOINT}}"],
+									"path": ["privileges"],
+									"query": [
+										{
+											"key": "size",
+											"value": "5"
+										},
+										{
+											"key": "nextCursor",
+											"value": "2501"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "findAll - 200 (no content)",
 							"request": {
 								"method": "GET",
@@ -349,6 +395,65 @@
 										{
 											"key": "name",
 											"value": "CREATE"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findAll - 200 (page gte boundary)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LOCAL_ENDPOINT}}/privileges/search",
+									"host": ["{{LOCAL_ENDPOINT}}"],
+									"path": ["privileges", "search"],
+									"query": [
+										{
+											"key": "page",
+											"value": "50"
+										},
+										{
+											"key": "size",
+											"value": "5"
+										},
+										{
+											"key": "name",
+											"value": "CREATE"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findAll - 200 (with seek)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LOCAL_ENDPOINT}}/privileges/search?size=5&name=CREATE&nextCursor=2501",
+									"host": ["{{LOCAL_ENDPOINT}}"],
+									"path": ["privileges", "search"],
+									"query": [
+										{
+											"key": "page",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "size",
+											"value": "5"
+										},
+										{
+											"key": "name",
+											"value": "CREATE"
+										},
+										{
+											"key": "nextCursor",
+											"value": "2501"
 										}
 									]
 								}
@@ -1015,6 +1120,52 @@
 							"response": []
 						},
 						{
+							"name": "findAll - 200 (page gte boundary)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LOCAL_ENDPOINT}}/roles",
+									"host": ["{{LOCAL_ENDPOINT}}"],
+									"path": ["roles"],
+									"query": [
+										{
+											"key": "page",
+											"value": "50"
+										},
+										{
+											"key": "size",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findAll - 200 (with seek)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LOCAL_ENDPOINT}}/roles?nextCursor=2501",
+									"host": ["{{LOCAL_ENDPOINT}}"],
+									"path": ["roles"],
+									"query": [
+										{
+											"key": "size",
+											"value": "5"
+										},
+										{
+											"key": "nextCursor",
+											"value": "2501"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "findAll - 200 (no content)",
 							"request": {
 								"method": "GET",
@@ -1286,6 +1437,87 @@
 					"item": [
 						{
 							"name": "findAll - 200",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LOCAL_ENDPOINT}}/roles/search?page=1&size=5&name=USER",
+									"host": ["{{LOCAL_ENDPOINT}}"],
+									"path": ["roles", "search"],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "size",
+											"value": "5"
+										},
+										{
+											"key": "name",
+											"value": "USER"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findAll - 200 (page gte boundary)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LOCAL_ENDPOINT}}/roles/search",
+									"host": ["{{LOCAL_ENDPOINT}}"],
+									"path": ["roles", "search"],
+									"query": [
+										{
+											"key": "page",
+											"value": "50"
+										},
+										{
+											"key": "size",
+											"value": "5"
+										},
+										{
+											"key": "name",
+											"value": "USER"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findAll - 200 (with seek)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LOCAL_ENDPOINT}}/roles/search?nextCursor=2501",
+									"host": ["{{LOCAL_ENDPOINT}}"],
+									"path": ["roles", "search"],
+									"query": [
+										{
+											"key": "size",
+											"value": "5"
+										},
+										{
+											"key": "name",
+											"value": "USER"
+										},
+										{
+											"key": "nextCursor",
+											"value": "2501"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findAll - 200 Copy",
 							"request": {
 								"method": "GET",
 								"header": [],
@@ -2011,6 +2243,52 @@
 										{
 											"key": "size",
 											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findAll - 200 (page gte boundary)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LOCAL_ENDPOINT}}/users",
+									"host": ["{{LOCAL_ENDPOINT}}"],
+									"path": ["users"],
+									"query": [
+										{
+											"key": "page",
+											"value": "50"
+										},
+										{
+											"key": "size",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "findAll - 200 (with seek)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{LOCAL_ENDPOINT}}/users?nextCursor=2501",
+									"host": ["{{LOCAL_ENDPOINT}}"],
+									"path": ["users"],
+									"query": [
+										{
+											"key": "size",
+											"value": "5"
+										},
+										{
+											"key": "nextCursor",
+											"value": "2501"
 										}
 									]
 								}
@@ -5575,7 +5853,8 @@
 										"key": "Cache-Control",
 										"value": "no-cache",
 										"system": true,
-										"type": "text"
+										"type": "text",
+										"disabled": true
 									},
 									{
 										"name": "postman-token",
@@ -5588,7 +5867,8 @@
 										"key": "Postman-Token",
 										"value": "<calculated when request is sent>",
 										"system": true,
-										"type": "text"
+										"type": "text",
+										"disabled": true
 									},
 									{
 										"name": "host",
@@ -5600,7 +5880,8 @@
 										"key": "Host",
 										"value": "<calculated when request is sent>",
 										"system": true,
-										"type": "text"
+										"type": "text",
+										"disabled": true
 									},
 									{
 										"name": "user-agent",
@@ -5612,7 +5893,8 @@
 										"key": "User-Agent",
 										"value": "PostmanRuntime/7.39.1",
 										"system": true,
-										"type": "text"
+										"type": "text",
+										"disabled": true
 									},
 									{
 										"name": "accept",
@@ -5624,7 +5906,8 @@
 										"key": "Accept",
 										"value": "*/*",
 										"system": true,
-										"type": "text"
+										"type": "text",
+										"disabled": true
 									},
 									{
 										"name": "accept-encoding",
@@ -5636,7 +5919,8 @@
 										"key": "Accept-Encoding",
 										"value": "gzip, deflate, br",
 										"system": true,
-										"type": "text"
+										"type": "text",
+										"disabled": true
 									},
 									{
 										"name": "connection",
@@ -5648,7 +5932,8 @@
 										"key": "Connection",
 										"value": "keep-alive",
 										"system": true,
-										"type": "text"
+										"type": "text",
+										"disabled": true
 									},
 									{
 										"key": "Authorization",

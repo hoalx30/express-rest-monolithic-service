@@ -55,13 +55,15 @@ const findById = async (id) => {
 	}
 };
 
-const findAll = async ({ page, size }) => {
+const findAll = async ({ page, size, nextCursor: currentCursor }) => {
 	try {
-		const { rows: queried, paging } = await roleRepository.findAll({ page, size });
+		let queried, pageable;
+		if (!currentCursor) ({ rows: queried, paging: pageable } = await roleRepository.findAll({ page, size }));
+		else ({ rows: queried, paging: pageable } = await roleRepository.findAllSeek({ currentCursor, size }));
 		const causeBy = failure.FindAllNoContentF;
 		if (!queried) throw createError({ causeBy, detail: causeBy.message });
 		const response = roleMapper.asListResponse(queried);
-		return { response, paging };
+		return { response, pageable };
 	} catch (error) {
 		console.log(`Error on Service: ${error?.causeBy?.message || error.message}`);
 		if (error.causeBy) throw error;
@@ -70,13 +72,15 @@ const findAll = async ({ page, size }) => {
 	}
 };
 
-const findAllBy = async ({ page, size, cond }) => {
+const findAllBy = async ({ page, size, cond, nextCursor: currentCursor }) => {
 	try {
-		const { rows: queried, paging } = await roleRepository.findAllBy({ page, size, cond });
+		let queried, pageable;
+		if (!currentCursor) ({ rows: queried, paging: pageable } = await roleRepository.findAllBy({ page, size, cond }));
+		else ({ rows: queried, paging: pageable } = await roleRepository.findAllBySeek({ currentCursor, size, cond }));
 		const causeBy = failure.FindAllByNoContentF;
 		if (!queried) throw createError({ causeBy, detail: causeBy.message });
 		const response = roleMapper.asListResponse(queried);
-		return { response, paging };
+		return { response, pageable };
 	} catch (error) {
 		console.log(`Error on Service: ${error?.causeBy?.message || error.message}`);
 		if (error.causeBy) throw error;

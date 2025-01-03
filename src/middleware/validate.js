@@ -7,7 +7,8 @@ const { global } = require('../constant');
 const idRule = () => param('id').notEmpty().withMessage('id is required').isInt().withMessage('id must be a integer number');
 
 const pagingRule = () => [
-	query('page').notEmpty().withMessage('page is required').isInt({ min: 1 }).withMessage('page must greater than 0'),
+	query('nextCursor').optional().isInt().withMessage('next cursor must be a integer number'),
+	query('page').if(query('nextCursor').not().exists()).notEmpty().withMessage('page is required').isInt({ min: 1 }).withMessage('page must greater than 0'),
 	query('size').notEmpty().withMessage('size is required').isInt({ min: 5, max: 50 }).withMessage('size must between 5 and 50'),
 ];
 

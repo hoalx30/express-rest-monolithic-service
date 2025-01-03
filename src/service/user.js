@@ -69,13 +69,15 @@ const findByUsername = async (username) => {
 	}
 };
 
-const findAll = async ({ page, size }) => {
+const findAll = async ({ page, size, nextCursor: currentCursor }) => {
 	try {
-		const { rows: queried, paging } = await userRepository.findAll({ page, size });
+		let queried, pageable;
+		if (!currentCursor) ({ rows: queried, paging: pageable } = await userRepository.findAll({ page, size }));
+		else ({ rows: queried, paging: pageable } = await userRepository.findAllSeek({ currentCursor, size }));
 		const causeBy = failure.FindAllNoContentF;
 		if (!queried) throw createError({ causeBy, detail: causeBy.message });
 		const response = userMapper.asListResponse(queried);
-		return { response, paging };
+		return { response, pageable };
 	} catch (error) {
 		console.log(`Error on Service: ${error?.causeBy?.message || error.message}`);
 		if (error.causeBy) throw error;
@@ -84,13 +86,15 @@ const findAll = async ({ page, size }) => {
 	}
 };
 
-const findAllBy = async ({ page, size, cond }) => {
+const findAllBy = async ({ page, size, cond, nextCursor: currentCursor }) => {
 	try {
-		const { rows: queried, paging } = await userRepository.findAllBy({ page, size, cond });
+		let queried, pageable;
+		if (!currentCursor) ({ rows: queried, paging: pageable } = await userRepository.findAllBy({ page, size, cond }));
+		else ({ rows: queried, paging: pageable } = await userRepository.findAllBySeek({ currentCursor, size, cond }));
 		const causeBy = failure.FindAllByNoContentF;
 		if (!queried) throw createError({ causeBy, detail: causeBy.message });
 		const response = userMapper.asListResponse(queried);
-		return { response, paging };
+		return { response, pageable };
 	} catch (error) {
 		console.log(`Error on Service: ${error?.causeBy?.message || error.message}`);
 		if (error.causeBy) throw error;

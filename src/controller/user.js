@@ -4,6 +4,8 @@ const { userService } = require('../service');
 const { success } = require('../constant');
 const response = require('../response');
 
+const { SEEK_PAGING_BOUNDARY } = process.env;
+
 const save = async (req, res, next) => {
 	try {
 		const { username, password, roleIds } = req.body;
@@ -27,8 +29,9 @@ const findById = async (req, res, next) => {
 
 const findAll = async (req, res, next) => {
 	try {
-		const { page, size } = req.query;
-		const { response: queried, paging } = await userService.findAll({ page: +page, size: +size });
+		let { page, size, nextCursor } = req.query;
+		if (page >= +SEEK_PAGING_BOUNDARY) nextCursor = page * size + 1;
+		const { response: queried, paging } = await userService.findAll({ page: +page, size: +size, nextCursor: +nextCursor });
 		response.doSuccessPaging(res, success.FindAllS, queried, paging);
 	} catch (error) {
 		next(error);
@@ -37,9 +40,10 @@ const findAll = async (req, res, next) => {
 
 const findAllBy = async (req, res, next) => {
 	try {
-		const { page, size, username } = req.query;
+		let { page, size, username, nextCursor } = req.query;
+		if (page >= +SEEK_PAGING_BOUNDARY) nextCursor = page * size + 1;
 		const cond = _.pickBy({ username }, (v) => !_.isNil(v));
-		const { response: queried, paging } = await userService.findAllBy({ page: +page, size: +size, cond });
+		const { response: queried, paging } = await userService.findAllBy({ page: +page, size: +size, cond, nextCursor: +nextCursor });
 		response.doSuccessPaging(res, success.FindAllByS, queried, paging);
 	} catch (error) {
 		next(error);

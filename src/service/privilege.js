@@ -5,6 +5,8 @@ const { privilegeValidator } = require('../validator');
 const { privilegeRepository } = require('../repository');
 const { privilegeMapper } = require('../mapper');
 
+const { SEEK_PAGING_BOUNDARY } = process.env;
+
 const ensureNotExistedByName = async (name) => {
 	const causeBy = failure.AlreadyExistedF;
 	if (await privilegeRepository.existByName(name)) throw createError({ causeBy, detail: causeBy.message });
@@ -44,13 +46,15 @@ const findById = async (id) => {
 	}
 };
 
-const findAll = async ({ page, size }) => {
+const findAll = async ({ page, size, nextCursor: currentCursor }) => {
 	try {
-		const { rows: queried, paging } = await privilegeRepository.findAll({ page, size });
+		let queried, pageable;
+		if (!currentCursor) ({ rows: queried, paging: pageable } = await privilegeRepository.findAll({ page, size }));
+		else ({ rows: queried, paging: pageable } = await privilegeRepository.findAllSeek({ currentCursor, size }));
 		const causeBy = failure.FindAllNoContentF;
 		if (!queried) throw createError({ causeBy, detail: causeBy.message });
 		const response = privilegeMapper.asListResponse(queried);
-		return { response, paging };
+		return { response, pageable };
 	} catch (error) {
 		console.log(`Error on Service: ${error?.causeBy?.message || error.message}`);
 		if (error.causeBy) throw error;
@@ -59,13 +63,15 @@ const findAll = async ({ page, size }) => {
 	}
 };
 
-const findAllBy = async ({ page, size, cond }) => {
+const findAllBy = async ({ page, size, cond, nextCursor: currentCursor }) => {
 	try {
-		const { rows: queried, paging } = await privilegeRepository.findAllBy({ page, size, cond });
+		let queried, pageable;
+		if (currentCursor) ({ rows: queried, paging: pageable } = await privilegeRepository.findAllBySeek({ currentCursor, size, cond }));
+		else ({ rows: queried, paging: pageable } = await privilegeRepository.findAllBy({ page, size, cond }));
 		const causeBy = failure.FindAllByNoContentF;
 		if (!queried) throw createError({ causeBy, detail: causeBy.message });
 		const response = privilegeMapper.asListResponse(queried);
-		return { response, paging };
+		return { response, pageable };
 	} catch (error) {
 		console.log(`Error on Service: ${error?.causeBy?.message || error.message}`);
 		if (error.causeBy) throw error;
