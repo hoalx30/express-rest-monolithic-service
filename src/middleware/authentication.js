@@ -21,7 +21,6 @@ const authenticate = async (req, res, next) => {
 	}
 };
 
-/**
 const authenticated = async (req, res, next) => {
 	await passport.authenticate('jwt', { session: false }, async (err, payload, info) => {
 		try {
@@ -42,6 +41,5 @@ const authenticated = async (req, res, next) => {
 		}
 	})(req, res, next);
 };
-*/
 
-module.exports = { authenticate };
+module.exports = { authenticate, authenticated };

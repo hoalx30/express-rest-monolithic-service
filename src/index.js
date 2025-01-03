@@ -10,6 +10,7 @@ const main = async () => {
 	await appCfg.dbConfig();
 	appCfg.middlewareConfig();
 	appCfg.parseBodyConfig();
+	appCfg.passportConfig();
 	appCfg.routeConfig();
 	appCfg.recoveryConfig();
 	app.listen(PORT);

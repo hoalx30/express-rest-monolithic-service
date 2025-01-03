@@ -12,6 +12,7 @@ const { global } = require('./constant');
 const model = require('./model');
 const response = require('./response');
 const { routeSetup } = require('./router');
+const passportProvider = require('./passport');
 
 const DBConfigF = 'can not established connection to database via sequelize.';
 
@@ -36,6 +37,8 @@ const middlewareConfig = () => {
 	app.use(helmet());
 	app.use(morgan('dev'));
 };
+
+const passportConfig = () => passportProvider.jwtStrategy();
 
 const routeConfig = () => routeSetup.established(app);
 
@@ -63,4 +66,4 @@ const recoveryConfig = () => {
 	});
 };
 
-module.exports = { dbConfig, parseBodyConfig, middlewareConfig, recoveryConfig, routeConfig };
+module.exports = { dbConfig, parseBodyConfig, middlewareConfig, recoveryConfig, passportConfig, routeConfig };
