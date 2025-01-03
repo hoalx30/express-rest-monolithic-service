@@ -2,6 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const createError = require('http-errors');
 
+const { winston: logger } = require('../context');
 const { failure } = require('../constant');
 const { authMapper } = require('../mapper');
 const { jwtProvider } = require('../auth');
@@ -41,15 +42,19 @@ const signIn = async (request) => {
 		await authValidator.whenSignIn(request);
 		const user = await userService.findByUsername(request.username);
 		const isAuthenticated = await bcrypt.compare(request.password, user.password);
+		logger.debug({ message: `compare password success: ${request?.username}`, error: undefined, traceId: 'uuid' });
 		const causeBy = failure.BadCredentialF;
 		if (!isAuthenticated) throw createError({ causeBy, detail: causeBy.message });
+		logger.debug({ message: `sign in success: ${request.username}`, error: undefined, traceId: 'uuid' });
 		return newCredential(user);
 	} catch (error) {
-		console.log(`Error on Service: ${error?.causeBy?.message || error.message}`);
 		let causeBy = failure.BadCredentialF;
+		const message = error.causeBy?.message ?? causeBy.message;
+		logger.error({ message: `sign in failed: ${request.username}`, error: message, traceId: 'uuid' });
 		if (error.causeBy === failure.NotExistedF) throw createError({ causeBy, detail: causeBy.message });
-		causeBy = failure.SignUpF;
-		if (error) throw error;
+		if (error.causeBy) throw error;
+		causeBy = failure.SignInF;
+		logger.error({ message: `sign in failed: ${request.username}`, error: error.message, traceId: 'uuid' });
 		throw createError({ causeBy, detail: causeBy.message });
 	}
 };
