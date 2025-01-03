@@ -4,9 +4,7 @@
 		"target": "ES6",
 		"checkJs": true,
 		"noUnusedLocals": true,
-		"lib": [
-          "ES2021.String"
-        ]
+		"lib": ["ES2021.String"]
 	},
 	"exclude": ["node_modules", "data"]
 }

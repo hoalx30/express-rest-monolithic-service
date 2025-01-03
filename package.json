@@ -1,41 +1,45 @@
 {
-  "name": "express-rest-monolithic-service",
-  "version": "1.0.0",
-  "description": "Express Restful Service Monolithic Architecture",
-  "main": "./src/index.js",
-  "scripts": {
-    "dev": "nodemon ./src/index.js",
-    "env": "sed \"s/=.*/=/\" .env > .env.example",
-    "swagger": "node ./src/swagger.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "husky": "^9.1.7",
-    "lint-staged": "^15.2.10",
-    "nodemon": "^3.1.7",
-    "prettier": "^3.4.2",
-    "swagger-autogen": "^2.23.7"
-  },
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "compression": "^1.7.5",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
-    "express-validator": "^7.2.0",
-    "helmet": "^8.0.0",
-    "http-errors": "^2.0.0",
-    "http-status-codes": "^2.3.0",
-    "joi": "^17.13.3",
-    "jsonwebtoken": "^9.0.2",
-    "morgan": "^1.10.0",
-    "mysql2": "^3.11.5",
-    "passport": "^0.7.0",
-    "passport-jwt": "^4.0.1",
-    "sequelize": "^6.37.5",
-    "swagger-ui-express": "^5.0.1",
-    "uuid": "^11.0.3"
-  }
+	"name": "express-rest-monolithic-service",
+	"version": "1.0.0",
+	"description": "Express Restful Service Monolithic Architecture",
+	"main": "./src/index.js",
+	"scripts": {
+		"dev": "nodemon ./src/index.js",
+		"env": "sed \"s/=.*/=/\" .env > .env.example",
+		"swagger": "node ./src/swagger.js",
+		"prepare": "husky"
+	},
+	"lint-staged": {
+		"*": "prettier --write --config .prettierrc ."
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"husky": "^9.1.7",
+		"lint-staged": "^15.2.10",
+		"nodemon": "^3.1.7",
+		"prettier": "^3.4.2",
+		"swagger-autogen": "^2.23.7"
+	},
+	"dependencies": {
+		"bcrypt": "^5.1.1",
+		"compression": "^1.7.5",
+		"cors": "^2.8.5",
+		"dotenv": "^16.4.7",
+		"express": "^4.21.2",
+		"express-validator": "^7.2.0",
+		"helmet": "^8.0.0",
+		"http-errors": "^2.0.0",
+		"http-status-codes": "^2.3.0",
+		"joi": "^17.13.3",
+		"jsonwebtoken": "^9.0.2",
+		"morgan": "^1.10.0",
+		"mysql2": "^3.11.5",
+		"passport": "^0.7.0",
+		"passport-jwt": "^4.0.1",
+		"sequelize": "^6.37.5",
+		"swagger-ui-express": "^5.0.1",
+		"uuid": "^11.0.3"
+	}
 }
