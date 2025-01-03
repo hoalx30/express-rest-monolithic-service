@@ -7,7 +7,8 @@
 		"dev": "nodemon ./src/index.js",
 		"env": "sed \"s/=.*/=/\" .env > .env.example",
 		"swagger": "node ./src/swagger.js",
-		"prepare": "husky"
+		"prepare": "husky",
+		"benchmark": "autocannon -m GET -H Authorization=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInNjb3BlIjoiUk9MRV9BRE1JTiBSRUFEIENSRUFURSBVUERBVEUgREVMRVRFIiwicmVmZXJJZCI6ImJjNTgzYjA3LTM0NjUtNDZmNi1hYzY0LThlNzIwNGM1NDcwNSIsImlhdCI6MTczNTg3NDYyOSwiZXhwIjoxNzM1ODc4MjI5LCJzdWIiOiJob2FseDIiLCJqdGkiOiJhYjU1MGVhNy0xYjJmLTQ0MDgtOWJiOC01MTk0MjE5MjUyZTUifQ.gaOp_5anWxggWaOMr1aick-gO4pB-AU3pmc3wnUT7VA http://localhost:8080/api/v1/auth/me"
 	},
 	"lint-staged": {
 		"*": "prettier --write --config .prettierrc ."
@@ -16,6 +17,7 @@
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
+		"autocannon": "^8.0.0",
 		"husky": "^9.1.7",
 		"lint-staged": "^15.2.10",
 		"nodemon": "^3.1.7",
