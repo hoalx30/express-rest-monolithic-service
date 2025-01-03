@@ -5,7 +5,8 @@
   "main": "./src/index.js",
   "scripts": {
     "dev": "nodemon ./src/index.js",
-    "env": "sed \"s/=.*/=/\" .env > .env.example"
+    "env": "sed \"s/=.*/=/\" .env > .env.example",
+    "swagger": "node ./src/swagger.js"
   },
   "keywords": [],
   "author": "",

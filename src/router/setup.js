@@ -17,6 +17,6 @@ const established = (app) => {
 	// prettier-ignore
 	app.use('/api/v1/profiles', statusRoute, /* #swagger.ignore = true */ );
 	// prettier-ignore
-	app.use('/api/v1/auth', authRoute, /* #swagger.ignore = true */ );
+	app.use('/api/v1/auth', authRoute );
 };
 module.exports = { established };

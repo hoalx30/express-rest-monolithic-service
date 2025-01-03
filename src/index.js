@@ -12,6 +12,7 @@ const main = async () => {
 	appCfg.parseBodyConfig();
 	appCfg.passportConfig();
 	appCfg.routeConfig();
+	appCfg.swaggerConfig();
 	appCfg.recoveryConfig();
 	app.listen(PORT);
 };

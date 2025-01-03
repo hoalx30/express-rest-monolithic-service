@@ -5,6 +5,17 @@ const { authService } = require('../service');
 const response = require('../response');
 
 const signUp = async (req, res, next) => {
+	/**
+	 * #swagger.auto = false
+	 * #swagger.tags = ['auth']
+	 * #swagger.summary = 'Sign up for new user'
+	 * #swagger.description = 'Sign up for new user with username, password and roleIds'
+	 * #swagger.parameters['body'] = { in: 'body', description: 'Register information.', schema: { $ref: '#/definitions/RegisterRequest' }}
+	 *
+	 * #swagger.responses[200] = { description: 'Register success.', schema: { $ref: '#/definitions/Credential' }}
+	 * #swagger.responses[400] = { description: 'Bad request: missing username, password, roleIds, username already exists, etc...'}
+	 * #swagger.responses[500] = { description: 'Uncategorized error.'}
+	 */
 	try {
 		const { username, password, roleIds } = req.body;
 		const request = { username, password, roleIds };
@@ -16,6 +27,17 @@ const signUp = async (req, res, next) => {
 };
 
 const signIn = async (req, res, next) => {
+	/**
+	 * #swagger.auto = false
+	 * #swagger.tags = ['auth']
+	 * #swagger.summary = 'Sign in existing user'
+	 * #swagger.description = 'Sign in existing user with username and password'
+	 * #swagger.parameters['body'] = { in: 'body', description: 'Credential information: username and password', schema: { $ref: '#/definitions/CredentialRequest' }}
+	 *
+	 * #swagger.responses[200] = { description: 'Sign in success.', schema: { $ref: '#/definitions/Credential' }}
+	 * #swagger.responses[400] = { description: 'Bad request: missing username, password, username not already exists, etc...'}
+	 * #swagger.responses[500] = { description: 'Uncategorized error.'}
+	 */
 	try {
 		const { username, password } = req.body;
 		const request = { username, password };
@@ -28,6 +50,17 @@ const signIn = async (req, res, next) => {
 
 const me = async (req, res, next) => {
 	try {
+		/**
+		 * #swagger.auto = false
+		 * #swagger.tags = ['auth']
+		 * #swagger.summary = 'Retrieve profile information'
+		 * #swagger.description = 'Retrieve profile information using access token'
+		 * #swagger.security = [{ "authorization": [] }]
+		 *
+		 * #swagger.responses[200] = { description: 'Retrieve profile success.', schema: { $ref: '#/definitions/RegisterResponse' }}
+		 * #swagger.responses[401] = { description: 'Unauthorized: missing token, token expired, token edited, token has been recall etc...'}
+		 * #swagger.responses[500] = { description: 'Uncategorized error.'}
+		 */
 		const { username } = req.user;
 		const user = await authService.me(username);
 		response.doSuccess(res, success.RetrieveProfileS, user);
@@ -38,6 +71,17 @@ const me = async (req, res, next) => {
 
 const signOut = async (req, res, next) => {
 	try {
+		/**
+		 * #swagger.auto = false
+		 * #swagger.tags = ['auth']
+		 * #swagger.summary = 'Sign out from logon session'
+		 * #swagger.description = 'Sign out from logon session'
+		 * #swagger.security = [{ "authorization": [] }]
+		 *
+		 * #swagger.responses[200] = { description: 'Sign out success.' }}
+		 * #swagger.responses[401] = { description: 'Unauthorized: missing token, token expired, token edited, etc...'}
+		 * #swagger.responses[500] = { description: 'Uncategorized error.'}
+		 */
 		const { sessionId: accessTokenId, sessionExpiredAt: accessTokenExpiredAt, userId } = req.user;
 		const badCredential = { accessTokenId, accessTokenExpiredAt, userId };
 		const sessionId = await authService.signOut(badCredential);
@@ -49,6 +93,17 @@ const signOut = async (req, res, next) => {
 
 const refresh = async (req, res, next) => {
 	try {
+		/**
+		 * #swagger.auto = false
+		 * #swagger.tags = ['auth']
+		 * #swagger.summary = 'Sign out from logon session'
+		 * #swagger.description = 'Sign out from logon session'
+		 * #swagger.security = [{ "authorization": [], "xRefreshToken": [] }]
+		 *
+		 * #swagger.responses[200] = { description: 'Sign out success.' }}
+		 * #swagger.responses[401] = { description: 'Unauthorized: missing token, token expired, token edited, token not suite, etc...'}
+		 * #swagger.responses[500] = { description: 'Uncategorized error.'}
+		 */
 		const xRefreshToken = req.header('X-REFRESH-TOKEN');
 		const causeBy = failure.MissingAuthorizationF;
 		if (!xRefreshToken) throw createError({ causeBy, detail: causeBy.message });

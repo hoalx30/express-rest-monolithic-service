@@ -4,6 +4,10 @@ const compression = require('compression');
 const helmet = require('helmet');
 const morgan = require('morgan');
 
+// @ts-ignore
+const swaggerDoc = require('../data/swagger.json');
+const swaggerUi = require('swagger-ui-express');
+
 const {
 	sequelize: { sequelize },
 	express: { app },
@@ -66,4 +70,6 @@ const recoveryConfig = () => {
 	});
 };
 
-module.exports = { dbConfig, parseBodyConfig, middlewareConfig, recoveryConfig, passportConfig, routeConfig };
+const swaggerConfig = () => app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDoc, {}));
+
+module.exports = { dbConfig, parseBodyConfig, middlewareConfig, recoveryConfig, passportConfig, routeConfig, swaggerConfig };
