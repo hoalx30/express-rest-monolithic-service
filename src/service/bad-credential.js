@@ -3,8 +3,8 @@ const createError = require('http-errors');
 const { failure } = require('../constant');
 const { badCredentialRepository } = require('../repository');
 const { badCredentialMapper } = require('../mapper');
+const { jwtProvider } = require('../auth');
 
-/**
 const ensureNotBadCredential = async (token) => {
 	try {
 		const claims = jwtProvider.verify(token, process.env.ACCESS_TOKEN_SECRET);
@@ -15,11 +15,11 @@ const ensureNotBadCredential = async (token) => {
 		return claims;
 	} catch (error) {
 		console.log(`Error on Service: ${error?.causeBy?.message || error.message}`);
+		if (error.causeBy) throw error;
 		const causeBy = failure.EnsureNotBadCredentialF;
 		throw createError({ causeBy, detail: causeBy.message });
 	}
 };
- */
 
 const save = async (creation) => {
 	try {
@@ -33,4 +33,4 @@ const save = async (creation) => {
 	}
 };
 
-module.exports = { save };
+module.exports = { save, ensureNotBadCredential };

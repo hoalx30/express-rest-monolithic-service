@@ -3,6 +3,7 @@ const roleController = require('./role');
 const userController = require('./user');
 const deviceController = require('./device');
 const profileController = require('./profile');
+const authController = require('./auth');
 
 module.exports = {
 	privilegeController,
@@ -10,4 +11,5 @@ module.exports = {
 	userController,
 	deviceController,
 	profileController,
+	authController,
 };
